@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgus3nqg4svli"]
+
+[ext_resource type="Texture2D" uid="uid://cqqlydtykxjmj" path="res://sprites/background-medium.png" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://bir2m5xnvk70m" path="res://game.gd" id="1_feb5d"]
+[ext_resource type="PackedScene" uid="uid://cjf6jbly6xdmy" path="res://tile_map.tscn" id="3_fc0e3"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_feb5d")
+
+[node name="game-background" type="Sprite2D" parent="."]
+position = Vector2(272, 336)
+texture = ExtResource("1_80nbo")
+
+[node name="TileMap" parent="." instance=ExtResource("3_fc0e3")]
