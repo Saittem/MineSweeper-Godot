@@ -39,6 +39,7 @@ func new_game():
 	generate_numbers()
 	generate_cover()
 
+#randomly generates mines
 func generate_mines():
 	for i in range(get_parent().TOTAL_MINES):
 		var mine_position = Vector2i(randi_range(0, COLS - 1), randi_range(0, ROWS - 1))
@@ -50,6 +51,7 @@ func generate_mines():
 		#add mine to tilemap
 		set_cell(mine_layer, mine_position, tile_id, mine_atlas)
 
+#generates numbers acording to the mines around them
 func generate_numbers():
 	#clear previous numbers in case the mine was moved
 	clear_layer(number_layer)
@@ -63,12 +65,14 @@ func generate_numbers():
 		if mine_count > 0 :
 			set_cell(number_layer, i, tile_id, number_atlas[mine_count - 1])
 
+#generates cover above the mine and number layers
 func generate_cover():
 	for y in range(ROWS):
 		for x in range(COLS):
 			var toggle = ((x + y) % 2)
 			set_cell(cover_layer, Vector2i(x, y), tile_id, Vector2i(3 - toggle, 0))
 
+#gets all cells that are not mines
 func get_empty_cells():
 	var empty_cells = []
 	
@@ -80,6 +84,7 @@ func get_empty_cells():
 	
 	return empty_cells
 
+#gets all surrounding cells around mines
 func get_all_surrounding_cells(middle_cell):
 	var surrounding_cells := []
 	var target_cell
@@ -94,5 +99,6 @@ func get_all_surrounding_cells(middle_cell):
 						surrounding_cells.append(target_cell)
 	return surrounding_cells
 
+#checks if the position is a mine or not
 func is_mine(position):
 	return get_cell_source_id(mine_layer, position) != -1
