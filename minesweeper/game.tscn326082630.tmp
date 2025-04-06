@@ -8,7 +8,7 @@
 script = ExtResource("1_feb5d")
 
 [node name="game-background" type="Sprite2D" parent="."]
-position = Vector2(272, 272)
+position = Vector2(272, 336)
 texture = ExtResource("1_80nbo")
 
 [node name="TileMap" parent="." instance=ExtResource("3_fc0e3")]
