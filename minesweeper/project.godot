@@ -10,17 +10,6 @@ config_version=5
 
 [application]
 
-config/name="MineSweeper"
-run/main_scene="res://game.tscn"
+config/name="Minesweeper"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
-
-[display]
-
-window/size/viewport_width=544
-window/size/viewport_height=608
-window/stretch/mode="viewport"
-
-[rendering]
-
-textures/canvas_textures/default_texture_filter=0
