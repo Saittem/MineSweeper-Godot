@@ -14,3 +14,12 @@ config/name="Minesweeper"
 run/main_scene="uid://bbfk70nope0i5"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=544
+window/size/viewport_height=608
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
