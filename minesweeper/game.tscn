@@ -35,19 +35,19 @@ script = ExtResource("1_fc0e3")
 [node name="TileMap" type="Node" parent="."]
 script = ExtResource("1_e2o6t")
 
-[node name="Hover" type="TileMapLayer" parent="TileMap"]
+[node name="Numbers" type="TileMapLayer" parent="TileMap"]
 tile_set = SubResource("TileSet_7jktm")
 
-[node name="Flags" type="TileMapLayer" parent="TileMap"]
+[node name="Mines" type="TileMapLayer" parent="TileMap"]
 tile_set = SubResource("TileSet_7jktm")
 
 [node name="Grass" type="TileMapLayer" parent="TileMap"]
 tile_set = SubResource("TileSet_7jktm")
 
-[node name="Numbers" type="TileMapLayer" parent="TileMap"]
+[node name="Flags" type="TileMapLayer" parent="TileMap"]
 tile_set = SubResource("TileSet_7jktm")
 
-[node name="Mines" type="TileMapLayer" parent="TileMap"]
+[node name="Hover" type="TileMapLayer" parent="TileMap"]
 tile_set = SubResource("TileSet_7jktm")
 
 [node name="Background-medium" type="Sprite2D" parent="."]
