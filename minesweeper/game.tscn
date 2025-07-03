@@ -1,14 +1,55 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgus3nqg4svli"]
+[gd_scene load_steps=7 format=3 uid="uid://bey6wskh2u8fi"]
 
-[ext_resource type="Texture2D" uid="uid://cqqlydtykxjmj" path="res://sprites/background-medium.png" id="1_80nbo"]
-[ext_resource type="Script" uid="uid://bir2m5xnvk70m" path="res://game.gd" id="1_feb5d"]
-[ext_resource type="PackedScene" uid="uid://cjf6jbly6xdmy" path="res://tile_map.tscn" id="3_fc0e3"]
+[ext_resource type="Script" uid="uid://bjp1argiu7n8m" path="res://tile_map.gd" id="1_e2o6t"]
+[ext_resource type="Script" uid="uid://b7yooftw03t5" path="res://game.gd" id="1_fc0e3"]
+[ext_resource type="Texture2D" uid="uid://ckglt5cptsmmo" path="res://sprites/tilemap.png" id="2_feb5d"]
+[ext_resource type="Texture2D" uid="uid://dml5xt13e14q7" path="res://sprites/background-medium.png" id="3_feb5d"]
 
-[node name="Game" type="Node"]
-script = ExtResource("1_feb5d")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fc0e3"]
+texture = ExtResource("2_feb5d")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+7:1/0 = 0
+6:1/0 = 0
+4:1/0 = 0
+3:1/0 = 0
+2:1/0 = 0
+0:1/0 = 0
+5:1/0 = 0
+1:1/0 = 0
 
-[node name="game-background" type="Sprite2D" parent="."]
-position = Vector2(272, 272)
-texture = ExtResource("1_80nbo")
+[sub_resource type="TileSet" id="TileSet_7jktm"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_fc0e3")
 
-[node name="TileMap" parent="." instance=ExtResource("3_fc0e3")]
+[node name="game" type="Node2D"]
+script = ExtResource("1_fc0e3")
+
+[node name="TileMap" type="Node" parent="."]
+script = ExtResource("1_e2o6t")
+
+[node name="Numbers" type="TileMapLayer" parent="TileMap"]
+tile_set = SubResource("TileSet_7jktm")
+
+[node name="Mines" type="TileMapLayer" parent="TileMap"]
+tile_set = SubResource("TileSet_7jktm")
+
+[node name="Grass" type="TileMapLayer" parent="TileMap"]
+tile_set = SubResource("TileSet_7jktm")
+
+[node name="Flags" type="TileMapLayer" parent="TileMap"]
+tile_set = SubResource("TileSet_7jktm")
+
+[node name="Hover" type="TileMapLayer" parent="TileMap"]
+tile_set = SubResource("TileSet_7jktm")
+
+[node name="Background-medium" type="Sprite2D" parent="."]
+position = Vector2(272, 336)
+texture = ExtResource("3_feb5d")

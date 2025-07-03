@@ -1,28 +1,35 @@
-extends TileMap
+extends Node
 
-#grid values
+#grid consts
 const ROWS : int = 17
 const COLS : int = 17
 const CELL_SIZE : int = 32
 
-#tilemap
+#tilemap variables
 var tile_id : int = 0
 
-#layer values
-var mine_layer : int = 0
-var number_layer : int = 1
-var cover_layer : int = 2
-var flag_layer : int = 3
-var hover_layer : int = 4
+#tilemaplayers
+@onready var hover_tilemaplayer = $Hover
+@onready var flags_tilemaplayer = $Flags
+@onready var grass_tilemaplayer = $Grass
+@onready var numbers_tilemaplayer = $Numbers
+@onready var mines_tilemaplayer = $Mines
 
-#atlas coordiantes
-var mine_atlas = Vector2i(4, 0)
+#layer variables
+#var mine_layer : int = -4
+#var number_layer : int = -3
+#var grass_layer : int = -2
+#var flag_layer : int = -1
+#var hover_layer : int = 0
+
+#atlas tile coords
+var mine_atlas := Vector2i(4, 0)
 var number_atlas : Array = generate_number_atlas()
-var hover_atlas = Vector2i(6, 0)
-var flag_atlas = Vector2i(5, 0)
+var hover_atlas := Vector2i(6, 0)
+var flag_atlas := Vector2i(5, 0)
 
-#array of mine coordiantes
-var mine_coords = []
+#array to store mine coords
+var mine_coords := []
 
 func generate_number_atlas():
 	var a := []
@@ -30,142 +37,115 @@ func generate_number_atlas():
 		a.append(Vector2i(i, 1))
 	return a
 
-#executes on start
 func _ready():
 	new_game()
 
+func _input(event):
+	if event is InputEventMouseButton:
+		#checks if the mouse is on the game board
+		if (event.position.y < (ROWS + 2) * CELL_SIZE) and (event.position.y >= 2 * CELL_SIZE):
+			var map_pos : Vector2i = hover_tilemaplayer.local_to_map(event.position)
+			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				if not is_flag(map_pos):
+					if is_mine(map_pos):
+						grass_tilemaplayer.clear()
+						print("Game over")
+					else:
+						process_left_click(map_pos)
+			elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+				process_right_click(map_pos)
+
+func process_left_click(pos):
+	grass_tilemaplayer.erase_cell(pos)
+
+func process_right_click(pos):
+	#checks if it is a grass cell
+	if is_grass(pos):
+		if is_flag(pos):
+			flags_tilemaplayer.erase_cell(pos)
+		else:
+			flags_tilemaplayer.set_cell(pos, tile_id, flag_atlas)
+
+func _process(_delta):
+	highlight_cell()
+
+func highlight_cell():
+	var mouse_pos : Vector2i = hover_tilemaplayer.local_to_map(hover_tilemaplayer.get_local_mouse_position())
+	
+	hover_tilemaplayer.clear()
+	#hover over grass
+	if is_grass(mouse_pos):
+		hover_tilemaplayer.set_cell(mouse_pos, tile_id, hover_atlas)
+
 func new_game():
-	clear()
+	tilemap_clear()
 	mine_coords.clear()
 	generate_mines()
 	generate_numbers()
-	generate_cover()
+	generate_grass()
 
-func _process(delta: float):
-	hover_cell()
+func tilemap_clear():
+	hover_tilemaplayer.clear()
+	flags_tilemaplayer.clear()
+	grass_tilemaplayer.clear()
+	numbers_tilemaplayer.clear()
+	mines_tilemaplayer.clear()
 
-func _input(event: InputEvent):
-	if event is InputEventMouseButton:
-		#check if the mouse is on the game board
-		if event.position.y < ROWS * CELL_SIZE:
-			var map_position = local_to_map(event.position)
-			#left click removes cover
-			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-				#check if there is flag
-				if not is_flag(map_position):
-					#check if there is mine
-					if is_mine(map_position):
-						clear_layer(cover_layer)
-						print("Skill issue")
-					else:
-						pressing_left_click(map_position)
-			#right click places and removes flags
-			elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-				pressing_right_click(map_position)
-
-func pressing_left_click(position):
-	var revealed_cells = []
-	var cells_to_reveal = [position]
-	#checks cells, clears them and add them to revealed cells
-	while not cells_to_reveal.is_empty():
-		erase_cell(cover_layer, cells_to_reveal[0])
-		#add to revealed cells
-		revealed_cells.append(cells_to_reveal[0])
-		if not is_number(cells_to_reveal[0]):
-			
-		#remove from cells to reveal
-		cells_to_reveal.erase(cells_to_reveal[0])
-		
-
-func pressing_right_click(position):
-	if is_grass(position):
-		if is_flag(position):
-			erase_cell(flag_layer, position)
-		else:
-			set_cell(flag_layer, position, tile_id, flag_atlas)
-
-func hover_cell():
-	var mouse_position = local_to_map(get_local_mouse_position())
-	#clears layer so it doesn't leave a trail
-	clear_layer(hover_layer)
-	if is_grass(mouse_position):
-		set_cell(hover_layer, mouse_position, tile_id, hover_atlas)
-	else:
-		if is_number(mouse_position):
-			set_cell(hover_layer, mouse_position, tile_id, hover_atlas)
-
-#randomly generates mines
 func generate_mines():
 	for i in range(get_parent().TOTAL_MINES):
-		var mine_position = Vector2i(randi_range(0, COLS - 1), randi_range(0, ROWS - 1))
-		#check if mine_position doesn't already exist
-		while mine_coords.has(mine_position):
-			mine_position = Vector2i(randi_range(0, COLS - 1), randi_range(2, ROWS - 1))
-		mine_coords.append(mine_position)
+		var mine_pos = Vector2i(randi_range(0, COLS - 1), randi_range(2, ROWS - 1))
 		
-		#add mine to tilemap
-		set_cell(mine_layer, mine_position, tile_id, mine_atlas)
+		#checks if the position was already generated and if was generates again
+		while mine_coords.has(mine_pos):
+			mine_pos = Vector2i(randi_range(0, COLS - 1), randi_range(2, ROWS - 1))
+		mine_coords.append(mine_pos)
+		#add mine to tilemaplayer
+		mines_tilemaplayer.set_cell(mine_pos, tile_id, mine_atlas)
 
-#generates numbers acording to the mines around them
 func generate_numbers():
-	#clear previous numbers in case the mine was moved
-	clear_layer(number_layer)
 	for i in get_empty_cells():
 		var mine_count : int = 0
-		for j in get_all_surrounding_cells(i):
-			#check if there is a min in the cell
+		for j in get_all_mine_surround_cells(i):
 			if is_mine(j):
 				mine_count += 1
-		#once counted, add the number cell to the tilemap
-		if mine_count > 0 :
-			set_cell(number_layer, i, tile_id, number_atlas[mine_count - 1])
+		
+		if mine_count > 0:
+				numbers_tilemaplayer.set_cell(i, tile_id, number_atlas[mine_count - 1])
 
-#generates cover above the mine and number layers
-func generate_cover():
+func generate_grass():
 	for y in range(ROWS):
 		for x in range(COLS):
 			var toggle = ((x + y) % 2)
-			set_cell(cover_layer, Vector2i(x, y), tile_id, Vector2i(3 - toggle, 0))
+			grass_tilemaplayer.set_cell(Vector2i(x, y + 2), tile_id, Vector2i(3 - toggle, 0))
 
-#gets all cells that are not mines
 func get_empty_cells():
-	var empty_cells = []
-	
+	var empty_cells := []
 	for y in range(ROWS):
 		for x in range(COLS):
-			#check if cell is empty and add it to the array
-			if not is_mine(Vector2i(x, y)):
-				empty_cells.append(Vector2i(x, y))
-	
+			#checks if the cell is empty and adds it to the array
+			if not is_mine(Vector2i(x, y+2)):
+				empty_cells.append(Vector2i(x, y+2))
 	return empty_cells
 
-#gets all surrounding cells around mines
-func get_all_surrounding_cells(middle_cell):
+func get_all_mine_surround_cells(center_cell):
 	var surrounding_cells := []
 	var target_cell
 	for y in range(3):
 		for x in range(3):
-			target_cell = middle_cell + Vector2i(x - 1, y - 1)
-			#skip cell if it is the one in the middle
-			if target_cell != middle_cell:
-				#check that the cell is on the grid
+			target_cell = center_cell + Vector2i(x - 1, y - 1)
+			#skip cell if is is the one in the center
+			if target_cell != center_cell:
+				#checks if the cell is on the grid
 				if (target_cell.x >= 0 and target_cell.x <= COLS - 1
 					and target_cell.y >= 0 and target_cell.y <= ROWS - 1):
-						surrounding_cells.append(target_cell)
+					surrounding_cells.append(target_cell)
 	return surrounding_cells
 
-#checks if the position is a mine or not
-func is_mine(position):
-	return get_cell_source_id(mine_layer, position) != -1
-	
-#checks if at the position is grass
-func is_grass(position):
-	return get_cell_source_id(cover_layer, position) != -1
+func is_mine(pos):
+	return mines_tilemaplayer.get_cell_source_id(pos) != -1
 
-#checks if at the position is number
-func is_number(position):
-	return get_cell_source_id(number_layer, position) != -1
+func is_grass(pos):
+	return grass_tilemaplayer.get_cell_source_id(pos) != -1
 
-#check if at the position is flag
-func is_flag(position):
-	return get_cell_source_id(flag_layer, position) != -1
+func is_flag(pos):
+	return flags_tilemaplayer.get_cell_source_id(pos) != -1

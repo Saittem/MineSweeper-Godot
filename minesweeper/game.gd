@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
-#game values
+#game consts
 const TOTAL_MINES : int = 25
