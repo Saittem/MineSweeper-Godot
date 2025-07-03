@@ -1,7 +1,8 @@
 extends Node
 
 #grid consts
-const ROWS : int = 17
+const Y_OFFSET : int = 2
+const ROWS : int = 17 + Y_OFFSET
 const COLS : int = 17
 const CELL_SIZE : int = 32
 
@@ -43,7 +44,7 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseButton:
 		#checks if the mouse is on the game board
-		if (event.position.y < (ROWS + 2) * CELL_SIZE) and (event.position.y >= 2 * CELL_SIZE):
+		if (event.position.y < ROWS * CELL_SIZE) and (event.position.y >= 2 * CELL_SIZE):
 			var map_pos : Vector2i = hover_tilemaplayer.local_to_map(event.position)
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 				if not is_flag(map_pos):
@@ -56,7 +57,14 @@ func _input(event):
 				process_right_click(map_pos)
 
 func process_left_click(pos):
-	grass_tilemaplayer.erase_cell(pos)
+	var revealed_cells := []
+	var cells_to_reveal := [pos]
+	while not cells_to_reveal.is_empty():
+		grass_tilemaplayer.erase_cell(cells_to_reveal[0])
+		revealed_cells.append(cells_to_reveal[0])
+		if not is_number(cells_to_reveal[0]):
+			cells_to_reveal = reveal_surrounding_cells(cells_to_reveal, revealed_cells)
+		cells_to_reveal.erase(cells_to_reveal[0])
 
 func process_right_click(pos):
 	#checks if it is a grass cell
@@ -65,6 +73,14 @@ func process_right_click(pos):
 			flags_tilemaplayer.erase_cell(pos)
 		else:
 			flags_tilemaplayer.set_cell(pos, tile_id, flag_atlas)
+
+func reveal_surrounding_cells(cells_to_reveal, revealed_cells):
+	for i in get_all_surround_cells(cells_to_reveal[0]):
+		# skip if already revealed or mine
+		if not revealed_cells.has(i) and not is_mine(i):
+			if not cells_to_reveal.has(i):
+				cells_to_reveal.append(i)
+	return cells_to_reveal
 
 func _process(_delta):
 	highlight_cell()
@@ -105,7 +121,7 @@ func generate_mines():
 func generate_numbers():
 	for i in get_empty_cells():
 		var mine_count : int = 0
-		for j in get_all_mine_surround_cells(i):
+		for j in get_all_surround_cells(i):
 			if is_mine(j):
 				mine_count += 1
 		
@@ -127,7 +143,7 @@ func get_empty_cells():
 				empty_cells.append(Vector2i(x, y+2))
 	return empty_cells
 
-func get_all_mine_surround_cells(center_cell):
+func get_all_surround_cells(center_cell):
 	var surrounding_cells := []
 	var target_cell
 	for y in range(3):
@@ -149,3 +165,6 @@ func is_grass(pos):
 
 func is_flag(pos):
 	return flags_tilemaplayer.get_cell_source_id(pos) != -1
+	
+func is_number(pos):
+	return numbers_tilemaplayer.get_cell_source_id(pos) != -1
