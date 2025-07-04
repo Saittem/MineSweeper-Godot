@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://db7xrsoryaasy"]
+[gd_scene load_steps=3 format=3 uid="uid://db7xrsoryaasy"]
+
+[ext_resource type="Script" uid="uid://css040ha58yhx" path="res://game_over.gd" id="1_y26ei"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xapjj"]
 bg_color = Color(0.215902, 0.215902, 0.215902, 1)
@@ -13,6 +15,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [node name="GameOver" type="CanvasLayer"]
+script = ExtResource("1_y26ei")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 8
@@ -40,6 +43,7 @@ offset_right = -21.21
 offset_bottom = 12.26
 grow_horizontal = 2
 grow_vertical = 2
+action_mode = 0
 text = "Restart"
 
 [node name="MenuBtn" type="Button" parent="Panel"]
@@ -65,3 +69,5 @@ offset_bottom = 46.0
 theme_override_font_sizes/font_size = 25
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="Panel/RestartBtn" to="." method="_on_restart_btn_pressed"]
