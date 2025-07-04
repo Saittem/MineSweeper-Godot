@@ -1,5 +1,10 @@
 extends Node
 
+#signals
+signal flag_placed
+signal flag_removed
+signal game_lost
+
 #grid consts
 const Y_OFFSET : int = 2
 const ROWS : int = 17 + Y_OFFSET
@@ -50,7 +55,7 @@ func _input(event):
 				if not is_flag(map_pos):
 					if is_mine(map_pos):
 						grass_tilemaplayer.clear()
-						print("Game over")
+						game_lost.emit()
 					else:
 						process_left_click(map_pos)
 			elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
@@ -62,6 +67,9 @@ func process_left_click(pos):
 	while not cells_to_reveal.is_empty():
 		grass_tilemaplayer.erase_cell(cells_to_reveal[0])
 		revealed_cells.append(cells_to_reveal[0])
+		if is_flag(cells_to_reveal[0]):
+			flags_tilemaplayer.erase_cell(cells_to_reveal[0])
+			flag_removed.emit()
 		if not is_number(cells_to_reveal[0]):
 			cells_to_reveal = reveal_surrounding_cells(cells_to_reveal, revealed_cells)
 		cells_to_reveal.erase(cells_to_reveal[0])
@@ -71,8 +79,10 @@ func process_right_click(pos):
 	if is_grass(pos):
 		if is_flag(pos):
 			flags_tilemaplayer.erase_cell(pos)
+			flag_removed.emit()
 		else:
 			flags_tilemaplayer.set_cell(pos, tile_id, flag_atlas)
+			flag_placed.emit()
 
 func reveal_surrounding_cells(cells_to_reveal, revealed_cells):
 	for i in get_all_surround_cells(cells_to_reveal[0]):
@@ -87,7 +97,6 @@ func _process(_delta):
 
 func highlight_cell():
 	var mouse_pos : Vector2i = hover_tilemaplayer.local_to_map(hover_tilemaplayer.get_local_mouse_position())
-	
 	hover_tilemaplayer.clear()
 	#hover over grass
 	if is_grass(mouse_pos):
@@ -108,7 +117,7 @@ func tilemap_clear():
 	mines_tilemaplayer.clear()
 
 func generate_mines():
-	for i in range(get_parent().TOTAL_MINES):
+	for i in range(get_parent().total_mines):
 		var mine_pos = Vector2i(randi_range(0, COLS - 1), randi_range(2, ROWS - 1))
 		
 		#checks if the position was already generated and if was generates again

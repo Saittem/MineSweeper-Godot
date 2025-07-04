@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://j2muvp62ry1w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2snw"]
+bg_color = Color(0.408329, 0.408329, 0.408329, 1)
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 544.0
+offset_bottom = 64.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_n2snw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="flagsLabel" type="Label" parent="."]
+offset_left = 74.0
+offset_top = 8.0
+offset_right = 169.0
+offset_bottom = 53.0
+theme_override_font_sizes/font_size = 32
+text = "Flags: "
+
+[node name="stopwatchLabel" type="Label" parent="."]
+offset_left = 403.0
+offset_top = 10.0
+offset_right = 443.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 32
+text = "0"

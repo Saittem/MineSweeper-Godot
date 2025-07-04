@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://db7xrsoryaasy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xapjj"]
+bg_color = Color(0.215902, 0.215902, 0.215902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.385493, 0.385493, 0.385492, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="GameOver" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = -49.0
+offset_right = 111.0
+offset_bottom = 100.18
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xapjj")
+
+[node name="RestartBtn" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 20.79
+offset_top = -18.74
+offset_right = -21.21
+offset_bottom = 12.26
+grow_horizontal = 2
+grow_vertical = 2
+text = "Restart"
+
+[node name="MenuBtn" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 20.79
+offset_top = 21.665
+offset_right = -21.21
+offset_bottom = 52.665
+grow_horizontal = 2
+grow_vertical = 2
+text = "Menu"
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 11.0
+offset_right = 201.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1

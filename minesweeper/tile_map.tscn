@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgu8r320jnfnd"]
+
+[ext_resource type="Script" uid="uid://bjp1argiu7n8m" path="res://tile_map.gd" id="1_1n30v"]
+[ext_resource type="Texture2D" uid="uid://ckglt5cptsmmo" path="res://sprites/tilemap.png" id="2_35kre"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_03na7"]
+texture = ExtResource("2_35kre")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+7:1/0 = 0
+6:1/0 = 0
+4:1/0 = 0
+3:1/0 = 0
+2:1/0 = 0
+0:1/0 = 0
+5:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_xftlc"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_03na7")
+
+[node name="TileMap" type="Node"]
+script = ExtResource("1_1n30v")
+
+[node name="Numbers" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_xftlc")
+
+[node name="Mines" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_xftlc")
+
+[node name="Grass" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_xftlc")
+
+[node name="Flags" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_xftlc")
+
+[node name="Hover" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_xftlc")
