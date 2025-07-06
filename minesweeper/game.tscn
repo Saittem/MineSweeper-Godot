@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://j2muvp62ry1w" path="res://hud.tscn" id="4_7jktm"]
 [ext_resource type="PackedScene" uid="uid://db7xrsoryaasy" path="res://game_over.tscn" id="5_7jktm"]
 
-[node name="game" type="Node2D"]
+[node name="game-medium" type="Node2D"]
 script = ExtResource("1_fc0e3")
-total_mines = 1
+total_mines = 15
 
 [node name="Background-medium" type="Sprite2D" parent="."]
 position = Vector2(272, 336)
