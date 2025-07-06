@@ -1,7 +1,128 @@
-[gd_scene load_steps=2 format=3 uid="uid://j2muvp62ry1w"]
+[gd_scene load_steps=20 format=3 uid="uid://j2muvp62ry1w"]
+
+[ext_resource type="Texture2D" uid="uid://hl6tivq6n1fm" path="res://sprites/hud-healthy-sprite-sheet.png" id="1_37p78"]
+[ext_resource type="Texture2D" uid="uid://jn5fqeqge6g4" path="res://sprites/hud-dead-sprite-sheet.png" id="1_64ctp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2snw"]
 bg_color = Color(0.408329, 0.408329, 0.408329, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fv7p"]
+atlas = ExtResource("1_64ctp")
+region = Rect2(0, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4u2vk"]
+atlas = ExtResource("1_64ctp")
+region = Rect2(544, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4q17s"]
+atlas = ExtResource("1_64ctp")
+region = Rect2(1088, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2d608"]
+atlas = ExtResource("1_64ctp")
+region = Rect2(1632, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w71nf"]
+atlas = ExtResource("1_64ctp")
+region = Rect2(2176, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64ctp"]
+atlas = ExtResource("1_37p78")
+region = Rect2(0, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8sq4i"]
+atlas = ExtResource("1_37p78")
+region = Rect2(544, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_640wx"]
+atlas = ExtResource("1_37p78")
+region = Rect2(1088, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2258"]
+atlas = ExtResource("1_37p78")
+region = Rect2(1632, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xsix"]
+atlas = ExtResource("1_37p78")
+region = Rect2(2176, 0, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rftc2"]
+atlas = ExtResource("1_37p78")
+region = Rect2(0, 64, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61f8s"]
+atlas = ExtResource("1_37p78")
+region = Rect2(544, 64, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g10ll"]
+atlas = ExtResource("1_37p78")
+region = Rect2(1088, 64, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpiub"]
+atlas = ExtResource("1_37p78")
+region = Rect2(1632, 64, 544, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amv7k"]
+atlas = ExtResource("1_37p78")
+region = Rect2(2176, 64, 544, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1fv7p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fv7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4u2vk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4q17s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2d608")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w71nf")
+}],
+"loop": true,
+"name": &"hud-dead",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64ctp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8sq4i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_640wx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2258")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xsix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rftc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61f8s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g10ll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpiub")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amv7k")
+}],
+"loop": true,
+"name": &"hud-healthy",
+"speed": 8.0
+}]
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -10,20 +131,28 @@ offset_right = 544.0
 offset_bottom = 64.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_n2snw")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(272, 32)
+sprite_frames = SubResource("SpriteFrames_1fv7p")
+animation = &"hud-healthy"
+autoplay = "hud-healthy"
 
 [node name="flagsLabel" type="Label" parent="."]
-offset_left = 74.0
-offset_top = 8.0
-offset_right = 169.0
-offset_bottom = 53.0
+offset_left = 82.0
+offset_top = 9.0
+offset_right = 119.0
+offset_bottom = 54.0
 theme_override_font_sizes/font_size = 32
-text = "Flags: "
+text = "45"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="stopwatchLabel" type="Label" parent="."]
-offset_left = 403.0
-offset_top = 10.0
-offset_right = 443.0
-offset_bottom = 55.0
+offset_left = 420.0
+offset_top = 9.0
+offset_right = 475.0
+offset_bottom = 54.0
 theme_override_font_sizes/font_size = 32
 text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

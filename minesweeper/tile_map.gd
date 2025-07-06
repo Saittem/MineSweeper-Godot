@@ -21,7 +21,7 @@ var tile_id : int = 0
 @onready var grass_tilemaplayer = $Grass
 @onready var numbers_tilemaplayer = $Numbers
 @onready var mines_tilemaplayer = $Mines
-
+@onready var hud = $"../HUD"
 #atlas tile coords
 var mine_atlas := Vector2i(4, 0)
 var number_atlas : Array = generate_number_atlas()
@@ -49,7 +49,9 @@ func _input(event) -> void:
 				if not is_flag(map_pos):
 					if is_mine(map_pos):
 						grass_tilemaplayer.clear()
+						hud.get_node("AnimatedSprite2D").play("hud-dead")
 						game_lost.emit()
+						hud.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 					else:
 						process_left_click(map_pos)
 			elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
@@ -73,6 +75,7 @@ func process_left_click(pos) -> void:
 			all_cleared = false
 	if all_cleared:
 		game_won.emit()
+		print("fhgfdhgbf")
 
 func process_right_click(pos) -> void:
 	#checks if it is a grass cell
@@ -103,6 +106,8 @@ func highlight_cell() -> void:
 		hover_tilemaplayer.set_cell(mouse_pos, tile_id, hover_atlas)
 
 func new_game() -> void:
+	hud.process_mode = Node.PROCESS_MODE_INHERIT
+	hud.get_node("AnimatedSprite2D").play("hud-healthy")
 	tilemap_clear()
 	mine_coords.clear()
 	generate_mines()

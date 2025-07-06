@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://css040ha58yhx" path="res://game_over.gd" id="1_y26ei"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xapjj"]
-bg_color = Color(0.215902, 0.215902, 0.215902, 1)
+bg_color = Color(0.215686, 0.215686, 0.215686, 0.686275)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
