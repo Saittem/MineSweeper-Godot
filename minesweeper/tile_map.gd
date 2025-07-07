@@ -8,8 +8,8 @@ signal game_won
 
 #grid consts
 const Y_OFFSET : int = 2
-const ROWS : int = 17 + Y_OFFSET
-const COLS : int = 17
+var ROWS : int
+var COLS : int
 const CELL_SIZE : int = 32
 
 #tilemap variables
@@ -38,6 +38,15 @@ func generate_number_atlas() -> Array:
 	return a
 
 func _ready() -> void:
+	if (Global.difficulty == "easy"):
+		ROWS = Global.ROWS_EASY + Y_OFFSET
+		COLS = Global.COLS_EASY
+	elif (Global.difficulty == "medium"):
+		ROWS = Global.ROWS_MEDIUM + Y_OFFSET
+		COLS = Global.COLS_MEDIUM
+	elif (Global.difficulty == "hard"):
+		ROWS = Global.ROWS_HARD + Y_OFFSET
+		COLS = Global.COLS_HARD
 	new_game()
 
 func _input(event) -> void:

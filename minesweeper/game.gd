@@ -1,7 +1,7 @@
 extends Node2D
 
 #game consts
-@export var total_mines : int = 45
+@export var total_mines : int
 var time_elapsed : float
 var remaining_mines : int
 
@@ -10,6 +10,12 @@ var remaining_mines : int
 @onready var GameOver = $GameOver
 
 func _ready() -> void:
+	if (Global.difficulty == "easy"):
+		total_mines = Global.MINE_COUNT_EASY
+	elif (Global.difficulty == "medium"):
+		total_mines = Global.MINE_COUNT_MEDIUM
+	elif (Global.difficulty == "hard"):
+		total_mines = Global.MINE_COUNT_HARD
 	new_game()
 
 func new_game() -> void:
