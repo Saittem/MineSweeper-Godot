@@ -10,12 +10,20 @@ var remaining_mines : int
 @onready var GameOver = $GameOver
 
 func _ready() -> void:
+	var new_background
+	
 	if (Global.difficulty == "easy"):
 		total_mines = Global.MINE_COUNT_EASY
+		new_background = load("res://sprites/background-easy.png")
 	elif (Global.difficulty == "medium"):
 		total_mines = Global.MINE_COUNT_MEDIUM
+		new_background = load("res://sprites/background-medium.png")
 	elif (Global.difficulty == "hard"):
 		total_mines = Global.MINE_COUNT_HARD
+		new_background = load("res://sprites/background-hard.png")
+	
+	$Background.texture = new_background
+	$Background.position = Vector2(new_background.get_width()/2, (new_background.get_height()/2) + 64)
 	new_game()
 
 func new_game() -> void:

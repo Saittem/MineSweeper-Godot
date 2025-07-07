@@ -47,6 +47,8 @@ func _ready() -> void:
 	elif (Global.difficulty == "hard"):
 		ROWS = Global.ROWS_HARD + Y_OFFSET
 		COLS = Global.COLS_HARD
+	
+	print(ROWS)
 	new_game()
 
 func _input(event) -> void:
