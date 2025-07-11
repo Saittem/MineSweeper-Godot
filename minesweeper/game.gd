@@ -6,7 +6,7 @@ var time_elapsed : float
 var remaining_mines : int
 
 #nodes
-@onready var HUD = $HUD
+@onready var HUD = $CenterContainer/HUD
 @onready var GameOver = $GameOver
 
 func _ready() -> void:
