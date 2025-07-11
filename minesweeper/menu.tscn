@@ -1,15 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://24o2p5gitmb0"]
+[gd_scene load_steps=3 format=3 uid="uid://24o2p5gitmb0"]
+
+[ext_resource type="Script" uid="uid://c1ato2v1omtv2" path="res://menu.gd" id="1_lti8b"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vsb4k"]
 
 [node name="menu" type="Node2D"]
+script = ExtResource("1_lti8b")
 
 [node name="Panel" type="Panel" parent="."]
 offset_right = 544.0
 offset_bottom = 608.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vsb4k")
 
-[node name="Button" type="Button" parent="Panel"]
+[node name="easyBtn" type="Button" parent="Panel"]
 layout_mode = 0
 offset_left = 162.0
 offset_top = 212.0
@@ -18,16 +21,7 @@ offset_bottom = 283.0
 theme_override_font_sizes/font_size = 45
 text = "Easy"
 
-[node name="Button3" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 162.0
-offset_top = 384.0
-offset_right = 382.0
-offset_bottom = 455.0
-theme_override_font_sizes/font_size = 45
-text = "Hard"
-
-[node name="Button4" type="Button" parent="Panel"]
+[node name="mediumBtn" type="Button" parent="Panel"]
 layout_mode = 0
 offset_left = 162.0
 offset_top = 295.0
@@ -36,7 +30,16 @@ offset_bottom = 366.0
 theme_override_font_sizes/font_size = 45
 text = "Medium"
 
-[node name="Button2" type="Button" parent="Panel"]
+[node name="hardBtn" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 384.0
+offset_right = 382.0
+offset_bottom = 455.0
+theme_override_font_sizes/font_size = 45
+text = "Hard"
+
+[node name="quitBtn" type="Button" parent="Panel"]
 layout_mode = 0
 offset_left = 162.0
 offset_top = 476.0
@@ -44,3 +47,8 @@ offset_right = 382.0
 offset_bottom = 547.0
 theme_override_font_sizes/font_size = 45
 text = "Quit"
+
+[connection signal="pressed" from="Panel/easyBtn" to="." method="_on_easy_btn_pressed"]
+[connection signal="pressed" from="Panel/mediumBtn" to="." method="_on_medium_btn_pressed"]
+[connection signal="pressed" from="Panel/hardBtn" to="." method="_on_hard_btn_pressed"]
+[connection signal="pressed" from="Panel/quitBtn" to="." method="_on_quit_btn_pressed"]
