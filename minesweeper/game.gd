@@ -6,10 +6,11 @@ var time_elapsed : float
 var remaining_mines : int
 
 #nodes
-@onready var HUD = $CenterContainer/HUD
+@onready var HUD = $HUD
 @onready var GameOver = $GameOver
 
 func _ready() -> void:
+	align_hud()
 	var new_background
 	
 	if (Global.difficulty == "easy"):
@@ -32,6 +33,9 @@ func new_game() -> void:
 	$TileMap.new_game()
 	GameOver.hide()
 	get_tree().paused = false
+
+func align_hud():
+	HUD.offset(50,0)
 
 func _process(delta: float) -> void:
 	time_elapsed += delta

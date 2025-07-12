@@ -19,11 +19,7 @@ texture = ExtResource("3_feb5d")
 [node name="GameOver" parent="." instance=ExtResource("5_7jktm")]
 process_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-offset_right = 736.0
-offset_bottom = 64.0
-
-[node name="HUD" parent="CenterContainer" instance=ExtResource("4_7jktm")]
+[node name="HUD" parent="." instance=ExtResource("4_7jktm")]
 
 [connection signal="flag_placed" from="TileMap" to="." method="_on_tile_map_flag_placed"]
 [connection signal="flag_removed" from="TileMap" to="." method="_on_tile_map_flag_removed"]

@@ -21,7 +21,7 @@ var tile_id : int = 0
 @onready var grass_tilemaplayer = $Grass
 @onready var numbers_tilemaplayer = $Numbers
 @onready var mines_tilemaplayer = $Mines
-@onready var hud = $"../CenterContainer/HUD"
+@onready var hud = $"../HUD"
 #atlas tile coords
 var mine_atlas := Vector2i(4, 0)
 var number_atlas : Array = generate_number_atlas()

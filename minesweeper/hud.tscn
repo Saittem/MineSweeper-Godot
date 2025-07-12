@@ -1,10 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://j2muvp62ry1w"]
+[gd_scene load_steps=19 format=3 uid="uid://j2muvp62ry1w"]
 
 [ext_resource type="Texture2D" uid="uid://hl6tivq6n1fm" path="res://sprites/hud-healthy-sprite-sheet.png" id="1_37p78"]
 [ext_resource type="Texture2D" uid="uid://jn5fqeqge6g4" path="res://sprites/hud-dead-sprite-sheet.png" id="1_64ctp"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2snw"]
-bg_color = Color(0.408329, 0.408329, 0.408329, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1fv7p"]
 atlas = ExtResource("1_64ctp")
@@ -126,21 +123,16 @@ animations = [{
 
 [node name="HUD" type="CanvasLayer"]
 
-[node name="Panel" type="Panel" parent="."]
-offset_right = 544.0
-offset_bottom = 64.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_n2snw")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(272, 32)
+position = Vector2(368, 32)
 sprite_frames = SubResource("SpriteFrames_1fv7p")
 animation = &"hud-healthy"
 autoplay = "hud-healthy"
 
 [node name="flagsLabel" type="Label" parent="."]
-offset_left = 82.0
+offset_left = 176.425
 offset_top = 9.0
-offset_right = 119.0
+offset_right = 213.425
 offset_bottom = 54.0
 theme_override_font_sizes/font_size = 32
 text = "45"
@@ -148,9 +140,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="stopwatchLabel" type="Label" parent="."]
-offset_left = 420.0
+offset_left = 518.475
 offset_top = 9.0
-offset_right = 475.0
+offset_right = 573.475
 offset_bottom = 54.0
 theme_override_font_sizes/font_size = 32
 text = "0"
