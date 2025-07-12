@@ -1,6 +1,6 @@
 extends Node2D
 
-#game consts
+#game variables
 @export var total_mines : int
 var time_elapsed : float
 var remaining_mines : int
@@ -8,9 +8,10 @@ var remaining_mines : int
 #nodes
 @onready var HUD = $HUD
 @onready var GameOver = $GameOver
+@onready var Background = $Background
 
 func _ready() -> void:
-	align_hud()
+	align_background()
 	var new_background
 	
 	if (Global.difficulty == "easy"):
@@ -34,8 +35,12 @@ func new_game() -> void:
 	GameOver.hide()
 	get_tree().paused = false
 
-func align_hud():
-	HUD.offset(50,0)
+var window_middle : float = DisplayServer.screen_get_size().x / 2
+
+func align_background():
+	if Global.difficulty == "easy":
+		#Background.set_offset(Vector2(window_middle,64))
+		pass
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
